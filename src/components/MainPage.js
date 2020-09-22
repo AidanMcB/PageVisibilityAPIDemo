@@ -1,35 +1,42 @@
 import React, { useState, useEffect } from 'react';
 
-import VideoContainer from './VideoContainer'
-
 export default function MainPage() {
 
-    const [visible, setVisible] = useState(undefined)
-    const [num, setNum] = useState(0)
+    let [num, setNum] = useState(0)
 
-    // useEffect( () => {
-    //     setTimeout(function(){ console.log("here", document.visibiltyState; }, 3000);
-    // })
-    // setInterval(function(){ console.log("This", document.visibilityState) }, 3000);
-
-    // console.log("dm", document.onvisibilitychange)
-
-    function handleVisibilityChange() {
-        if (document.hidden) {
-          console.log("hidden here");
-          setNum(num+1)
-        } else  {
-           console.log("showing here");
+    
+    // function handleVisibilityChange() {
+    //     if (document.hidden == false) {
+    //         setNum(num+=1)
+    //     }
+    // }
+    
+    var stopVideo = function ( element ) {
+        var iframe = element.querySelector( 'iframe');
+        var video = element.querySelector( 'video' );
+        if ( iframe ) {
+            var iframeSrc = iframe.src;
+            iframe.src = iframeSrc;
         }
-      }
-      
-      document.addEventListener("visibilitychange", handleVisibilityChange, false);
+        if ( video ) {
+            video.pause();
+        }
+    };
 
+    document.addEventListener("visibilitychange", handleVisibilityChange, false);
+
+   
     return (
-        <div>Main Page
-            <VideoContainer />
-            {num}
-            <button onClick={() => console.log("ok")}>Button </button>
+        <div>
+            <button onClick={stopVideo}>Stop The Video</button>
+            <h1>How many times have I navigated away?</h1>
+            <iframe id="videoElement" width="560" height="315" src="https://www.youtube.com/embed/UX1WHwFztzY?enablejsapi=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         </div>
     )
 }
+
+
+
+
+
+
